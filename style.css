@@ -49,6 +49,7 @@ body {
 }
 
 .board {
+  grid-row: 2;
   min-height: 0;
   display: grid;
   grid-template-rows: repeat(4, minmax(0, 1fr));
