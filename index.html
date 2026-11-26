@@ -14,20 +14,21 @@
   <header class="app-header" id="app-header">
     <div class="brand-row">
       <a class="brand" href="#sequence" aria-label="Mnemonica Magic 首頁">Mnemonica <span>Magic</span></a>
-      <button class="fullscreen-button" id="enter-fullscreen" type="button">進入全螢幕</button>
+      <button class="fullscreen-button" id="enter-fullscreen" type="button">全螢幕</button>
     </div>
     <nav class="mode-nav" aria-label="功能分頁">
       <button class="nav-button is-active" type="button" data-page-target="sequence" aria-current="page">全牌序</button>
       <button class="nav-button" type="button" data-page-target="portrait">直向瀏覽</button>
       <button class="nav-button" type="button" data-page-target="memory">記憶</button>
       <button class="nav-button" type="button" data-page-target="lookup">查詢</button>
+      <button class="nav-button" type="button" data-page-target="game">小遊戲</button>
     </nav>
   </header>
 
   <main class="app-main" id="app-main">
     <section class="page page--sequence is-active" data-page="sequence" aria-labelledby="sequence-title">
       <div class="screen-heading">
-        <div><h1 id="sequence-title">Mnemonica 全牌序</h1><p>52 張牌同屏呈現；橫向螢幕可進入純牌序全螢幕。</p></div>
+      <div><h1 id="sequence-title">Mnemonica 全牌序</h1><p>52 張牌同屏呈現；全螢幕時嘗試自動橫向。</p></div>
       </div>
       <p class="orientation-note" id="orientation-note">請將手機橫放，完整牌序會更清楚</p>
       <div class="board board--landscape" id="sequence-board" aria-label="Mnemonica 牌序"></div>
@@ -37,7 +38,48 @@
       <div class="screen-heading">
         <div><h1 id="portrait-title">直向瀏覽</h1><p>依位置 1 到 52 排列；手機直拿時，每張牌都有較寬的空間。</p></div>
       </div>
-      <div class="board board--compact" id="portrait-board" aria-label="直向牌序，位置 1 到 52"></div>
+      <p class="orientation-note" id="portrait-orientation-note">請將手機橫放，牌面會更大</p>
+      <div class="board board--five" id="portrait-board" aria-label="每排五張，位置 1 到 52"></div>
+    </section>
+
+    <section class="page page--game" data-page="game" aria-labelledby="game-title" hidden>
+      <div class="screen-heading">
+        <div><h1 id="game-title">Mnemonica 小遊戲</h1><p>選一種玩法，在 10 秒內盡可能答對；答對立即進入下一題。</p></div>
+      </div>
+      <div class="game-content">
+        <div class="game-setup" id="game-setup">
+          <div class="selector-group">
+            <h2>選擇玩法</h2>
+            <div class="game-mode-picker" role="group" aria-label="遊戲模式">
+              <button class="game-mode is-selected" type="button" data-game-mode="position-card" aria-pressed="true"><strong>位置認牌</strong><span>給位置，選出牌</span></button>
+              <button class="game-mode" type="button" data-game-mode="card-position" aria-pressed="false"><strong>牌找位置</strong><span>給牌，選出位置</span></button>
+              <button class="game-mode" type="button" data-game-mode="last-digit" aria-pressed="false"><strong>尾數接龍</strong><span>選尾數，依序回想</span></button>
+              <button class="game-mode" type="button" data-game-mode="missing-card" aria-pressed="false"><strong>五張缺牌</strong><span>找出一組中的缺牌</span></button>
+            </div>
+          </div>
+          <div class="digit-picker-wrap" id="digit-picker-wrap" hidden>
+            <h2>選一個尾數</h2>
+            <div class="digit-picker" id="digit-picker" role="group" aria-label="選擇數字 0 到 9"></div>
+            <p class="game-help">先唸出對應牌面，再點選答案。選 7 會依序練習位置 7、17、27、37、47。</p>
+          </div>
+          <div class="game-start-row">
+            <p class="game-help">每局 10 秒；答對得 1 分，答錯會短暫顯示正解。本局結束後不保存分數。</p>
+            <button class="primary-button" id="start-game" type="button">開始 10 秒挑戰</button>
+          </div>
+        </div>
+        <div class="game-stage" id="game-stage" hidden>
+          <div class="game-scorebar"><span class="timer"><strong id="game-time">10</strong><small>秒</small></span><span>本局得分 <strong id="game-score">0</strong></span></div>
+          <p class="game-feedback" id="game-feedback" aria-live="polite">開始作答</p>
+          <div class="game-question">
+            <p id="game-prompt"></p>
+            <div class="question-visual" id="question-visual"></div>
+            <div class="answer-choices" id="answer-choices"></div>
+          </div>
+          <div class="game-finished" id="game-finished" hidden>
+            <h2>時間到</h2><p id="game-final-score"></p><button class="primary-button" id="play-again" type="button">再玩一局</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="page page--memory" data-page="memory" aria-labelledby="memory-title" hidden>
