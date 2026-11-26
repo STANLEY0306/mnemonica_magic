@@ -5,14 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#101a20">
   <meta name="color-scheme" content="dark">
-  <title>Mnemonica 牌序表</title>
+  <title>Mnemonica Magic｜牌序、記憶與查詢</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="data.js"></script>
   <script defer src="main.js"></script>
 </head>
-<body>
-  <p class="orientation-note" aria-hidden="true">請將手機橫放，牌面會更大</p>
-  <main id="board" class="board" aria-label="Mnemonica 牌序表"></main>
-  <button id="fullscreen" class="fullscreen-button" type="button" aria-label="進入全螢幕">全螢幕</button>
+<body data-page="sequence">
+  <header class="app-header" id="app-header">
+    <div class="brand-row">
+      <a class="brand" href="#sequence" aria-label="Mnemonica Magic 首頁">Mnemonica <span>Magic</span></a>
+      <button class="fullscreen-button" id="enter-fullscreen" type="button">進入全螢幕</button>
+    </div>
+    <nav class="mode-nav" aria-label="功能分頁">
+      <button class="nav-button is-active" type="button" data-page-target="sequence" aria-current="page">全牌序</button>
+      <button class="nav-button" type="button" data-page-target="portrait">直向瀏覽</button>
+      <button class="nav-button" type="button" data-page-target="memory">記憶</button>
+      <button class="nav-button" type="button" data-page-target="lookup">查詢</button>
+    </nav>
+  </header>
+
+  <main class="app-main" id="app-main">
+    <section class="page page--sequence is-active" data-page="sequence" aria-labelledby="sequence-title">
+      <div class="screen-heading">
+        <div><h1 id="sequence-title">Mnemonica 全牌序</h1><p>52 張牌同屏呈現；橫向螢幕可進入純牌序全螢幕。</p></div>
+      </div>
+      <p class="orientation-note" id="orientation-note">請將手機橫放，完整牌序會更清楚</p>
+      <div class="board board--landscape" id="sequence-board" aria-label="Mnemonica 牌序"></div>
+    </section>
+
+    <section class="page page--portrait" data-page="portrait" aria-labelledby="portrait-title" hidden>
+      <div class="screen-heading">
+        <div><h1 id="portrait-title">直向瀏覽</h1><p>依位置 1 到 52 排列；手機直拿時，每張牌都有較寬的空間。</p></div>
+      </div>
+      <div class="board board--compact" id="portrait-board" aria-label="直向牌序，位置 1 到 52"></div>
+    </section>
+
+    <section class="page page--memory" data-page="memory" aria-labelledby="memory-title" hidden>
+      <div class="screen-heading">
+        <div><h1 id="memory-title">記憶模式</h1><p>先回想牌面，再點牌揭曉。選擇全副牌或一段位置練習。</p></div>
+      </div>
+      <div class="memory-tools">
+        <div class="scope-picker" role="group" aria-label="選擇練習範圍">
+          <button class="scope-button is-active" type="button" data-scope="all" aria-pressed="true">全副牌</button>
+          <button class="scope-button" type="button" data-scope="0" aria-pressed="false">1–13</button>
+          <button class="scope-button" type="button" data-scope="1" aria-pressed="false">14–26</button>
+          <button class="scope-button" type="button" data-scope="2" aria-pressed="false">27–39</button>
+          <button class="scope-button" type="button" data-scope="3" aria-pressed="false">40–52</button>
+        </div>
+        <button class="quiet-button" id="hide-again" type="button">重新遮住本段</button>
+      </div>
+      <div class="board board--compact board--memory" id="memory-board" aria-label="點擊位置揭示牌面"></div>
+    </section>
+
+    <section class="page page--lookup" data-page="lookup" aria-labelledby="lookup-title" hidden>
+      <div class="screen-heading">
+        <div><h1 id="lookup-title">查詢</h1><p>選牌查位置，或選位置查牌；答案立即顯示。</p></div>
+      </div>
+      <div class="lookup-tools">
+        <div class="lookup-switch" role="group" aria-label="選擇查詢方向">
+          <button class="lookup-tab is-active" type="button" data-lookup-mode="card" aria-pressed="true">牌 → 位置</button>
+          <button class="lookup-tab" type="button" data-lookup-mode="position" aria-pressed="false">位置 → 牌</button>
+        </div>
+        <div class="lookup-panel" id="lookup-card-panel">
+          <div class="selector-group"><h2>選擇點數</h2><div class="rank-picker" id="rank-picker" role="group" aria-label="點數"></div></div>
+          <div class="selector-group"><h2>選擇花色</h2><div class="suit-picker" id="suit-picker" role="group" aria-label="花色"></div></div>
+          <p class="lookup-result" id="card-lookup-result" aria-live="polite">選擇點數與花色後，這裡會顯示位置。</p>
+        </div>
+        <div class="lookup-panel" id="lookup-position-panel" hidden>
+          <div class="selector-group"><h2>選擇位置</h2><div class="position-picker" id="position-picker" role="group" aria-label="位置 1 到 52"></div></div>
+          <p class="lookup-result" id="position-lookup-result" aria-live="polite">選擇位置後，這裡會顯示牌面。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="fullscreen-touch-zone" id="fullscreen-touch-zone" aria-hidden="true"></div>
+  <button class="exit-fullscreen-button" id="exit-fullscreen" type="button" hidden>退出全螢幕</button>
 </body>
 </html>
