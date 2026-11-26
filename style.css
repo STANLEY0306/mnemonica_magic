@@ -32,7 +32,7 @@ html, body {
 
 body {
   display: grid;
-  grid-template-rows: 0fr minmax(0, 1fr);
+  grid-template-rows: 48px minmax(0, 1fr);
   padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
   background: var(--background);
 }
@@ -149,4 +149,5 @@ body {
   body { grid-template-rows: min(5vh, 38px) minmax(0, 1fr); }
   .orientation-note { display: flex; }
   .fullscreen-button { top: calc(var(--safe-top) + 2px); }
+  .face { font-size: clamp(10px, 50cqw, 72px); }
 }
